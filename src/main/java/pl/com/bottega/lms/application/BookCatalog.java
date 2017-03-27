@@ -1,5 +1,5 @@
 package pl.com.bottega.lms.application;
 
 
-public interface SearchingProcess {
+public interface BookCatalog {
 }

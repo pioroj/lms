@@ -1,5 +1,10 @@
 package pl.com.bottega.lms.application;
 
 
-public class AdminModule {
+import pl.com.bottega.lms.model.BookNumber;
+
+public interface AdminModule {
+
+    BookNumber add();
+
 }
