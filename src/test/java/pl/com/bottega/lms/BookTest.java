@@ -6,6 +6,7 @@ import pl.com.bottega.lms.model.Book;
 import pl.com.bottega.lms.model.NumberGenerator;
 import pl.com.bottega.lms.model.commands.AddBookCommand;
 import pl.com.bottega.lms.model.commands.OrderBookCommand;
+import pl.com.bottega.lms.model.commands.ReturnBookCommand;
 
 import java.time.LocalDate;
 
@@ -31,6 +32,19 @@ public class BookTest {
         System.out.println(book.getNumber());
 
         assertEquals(false, book.isAvailable());
+    }
+
+    @Test
+    public void shouldBeAvailableAfterReturning() {
+        Book book = given().newBook();
+
+        OrderBookCommand orderCmd = new OrderBookCommand();
+        book.orderBook(orderCmd);
+
+        ReturnBookCommand returnCmd = new ReturnBookCommand();
+        book.returnBook(returnCmd);
+
+        assertEquals(true, book.isAvailable());
     }
 
     private BookAssembler given() {

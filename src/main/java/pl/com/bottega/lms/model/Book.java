@@ -33,7 +33,8 @@ public class Book {
     }
 
     public void returnBook(ReturnBookCommand cmd) {
-
+        cmd.setReturnDate(LocalDateTime.now());
+        this.available = true;
     }
 
     public BookNumber getNumber() {
