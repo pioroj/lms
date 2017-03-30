@@ -1,6 +1,8 @@
 package pl.com.bottega.lms.model;
 
+import javax.persistence.Embeddable;
 
+@Embeddable
 public class User {
 
     private Long id;

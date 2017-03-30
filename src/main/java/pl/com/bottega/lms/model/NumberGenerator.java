@@ -1,17 +1,12 @@
 package pl.com.bottega.lms.model;
 
 
+import java.util.UUID;
+
 public class NumberGenerator {
 
-    private static long counter = 0L;
-
     public BookNumber generate() {
-        return new BookNumber("nr-" + bookCounter());
-    }
-
-    private long bookCounter() {
-        counter++;
-        return counter;
+        return new BookNumber("nr-" + UUID.randomUUID().toString());
     }
 
 }
