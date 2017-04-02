@@ -8,6 +8,8 @@ import pl.com.bottega.lms.application.implementation.StandardAdminModule;
 import pl.com.bottega.lms.application.implementation.StandardOrderingProcess;
 import pl.com.bottega.lms.model.BookRepository;
 import pl.com.bottega.lms.model.NumberGenerator;
+import pl.com.bottega.lms.model.OrderRepository;
+import pl.com.bottega.lms.model.UserRepository;
 
 @org.springframework.context.annotation.Configuration
 public class Configuration {
@@ -33,8 +35,20 @@ public class Configuration {
     }
 
     @Bean
-    public OrderingProcess orderingProcess(BookRepository bookRepository) {
-        return new StandardOrderingProcess(bookRepository);
+    public OrderingProcess orderingProcess(BookRepository bookRepository,
+                                           OrderRepository orderRepository,
+                                           UserRepository userRepository) {
+        return new StandardOrderingProcess(bookRepository, orderRepository, userRepository);
+    }
+
+    @Bean
+    public OrderRepository orderRepository() {
+        return new JPAOrderRepository();
+    }
+
+    @Bean
+    public UserRepository userRepository() {
+        return new JPAUserRepository();
     }
 
 }

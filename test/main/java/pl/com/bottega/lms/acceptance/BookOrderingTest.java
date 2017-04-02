@@ -47,8 +47,7 @@ public class BookOrderingTest {
         //then
         BookDto bookDto = bookCatalog.get(bookNumber);
         assertThat(bookDto.isAvailable()).isFalse();
-        assertThat(bookDto.getOrders().size()).isEqualTo(1);
-        //TODO orderDto
+
     }
 
 }

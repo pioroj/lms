@@ -33,13 +33,6 @@ public class JPABookCatalog implements BookCatalog {
         bookDto.setTitle(book.getTitle());
         bookDto.setAvailable(book.isAvailable());
 
-        List<OrderDto> orderDtos = new LinkedList<>();
-        for (Order order : book.getOrders()) {
-            OrderDto orderDto = createOrderDto(order);
-            orderDtos.add(orderDto);
-        }
-
-        bookDto.setOrders(orderDtos);
         return bookDto;
     }
 

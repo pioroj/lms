@@ -8,7 +8,6 @@ public class BookDto {
     private String number;
     private String title;
     private boolean available;
-    private List<OrderDto> orders;
 
     public String getNumber() {
         return number;
@@ -34,11 +33,4 @@ public class BookDto {
         this.available = available;
     }
 
-    public List<OrderDto> getOrders() {
-        return orders;
-    }
-
-    public void setOrders(List<OrderDto> orders) {
-        this.orders = orders;
-    }
 }
