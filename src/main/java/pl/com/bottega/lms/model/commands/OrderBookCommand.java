@@ -9,15 +9,6 @@ public class OrderBookCommand {
 
     private String number;
     private User user;
-    private LocalDateTime orderDate;
-
-    public LocalDateTime getOrderDate() {
-        return orderDate;
-    }
-
-    public void setOrderDate(LocalDateTime orderDate) {
-        this.orderDate = orderDate;
-    }
 
     public String getNumber() {
         return number;

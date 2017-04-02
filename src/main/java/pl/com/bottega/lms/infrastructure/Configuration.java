@@ -3,7 +3,9 @@ package pl.com.bottega.lms.infrastructure;
 import org.springframework.context.annotation.Bean;
 import pl.com.bottega.lms.application.AdminModule;
 import pl.com.bottega.lms.application.BookCatalog;
+import pl.com.bottega.lms.application.OrderingProcess;
 import pl.com.bottega.lms.application.implementation.StandardAdminModule;
+import pl.com.bottega.lms.application.implementation.StandardOrderingProcess;
 import pl.com.bottega.lms.model.BookRepository;
 import pl.com.bottega.lms.model.NumberGenerator;
 
@@ -28,6 +30,11 @@ public class Configuration {
     @Bean
     public AdminModule adminModule(NumberGenerator numberGenerator, BookRepository bookRepository) {
         return new StandardAdminModule(numberGenerator, bookRepository);
+    }
+
+    @Bean
+    public OrderingProcess orderingProcess(BookRepository bookRepository) {
+        return new StandardOrderingProcess(bookRepository);
     }
 
 }

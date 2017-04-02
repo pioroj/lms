@@ -4,9 +4,8 @@ package pl.com.bottega.lms.acceptance;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import pl.com.bottega.lms.LmsApplication;
 import pl.com.bottega.lms.application.AdminModule;
 import pl.com.bottega.lms.application.BookCatalog;
 import pl.com.bottega.lms.application.BookDto;
@@ -17,7 +16,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(LmsApplication.class)
+@SpringBootTest
 public class BookAdminTest {
 
     @Autowired

@@ -5,12 +5,10 @@ import pl.com.bottega.lms.model.commands.AddBookCommand;
 import pl.com.bottega.lms.model.commands.OrderBookCommand;
 import pl.com.bottega.lms.model.commands.ReturnBookCommand;
 
-import javax.persistence.EmbeddedId;
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -24,7 +22,7 @@ public class Book {
     private int year;
     private boolean available;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "bookNumber")
     private Set<Order> orders;
 
@@ -36,11 +34,22 @@ public class Book {
         this.author = cmd.getAuthor();
         this.year = cmd.getYear();
         this.available = true;
+        this.orders = new HashSet<>();
     }
 
     public void orderBook(OrderBookCommand cmd) {
-        cmd.setOrderDate(LocalDateTime.now());
         this.available = false;
+        Order order = getOrder(cmd.getUser());
+        order.orderBook();
+    }
+
+    private Order getOrder(User user) {
+        for (Order order : orders) {
+            if (order.isOwnedBy(user)) {
+                return order;
+            }
+        }
+        throw new BookOrderException(String.format("No order for user %s", user));
     }
 
     public void returnBook(ReturnBookCommand cmd) {
@@ -91,4 +100,6 @@ public class Book {
     public Set<Order> getOrders() {
         return Collections.unmodifiableSet(orders);
     }
+
+
 }

@@ -19,8 +19,8 @@ public class JPABookRepository implements BookRepository {
     }
 
     @Override
-    public Book get(BookNumber isbn) {
-        return null;
+    public Book get(BookNumber bookNumber) {
+        return entityManager.find(Book.class, bookNumber);
     }
 
     @Override

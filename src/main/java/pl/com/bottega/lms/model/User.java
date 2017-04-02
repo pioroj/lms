@@ -6,14 +6,16 @@ import javax.persistence.Embeddable;
 public class User {
 
     private Long id;
-    private String name;
+    /*private String name;
     private String surname;
     private String phoneNumber;
-    private String email;
+    private String email;*/
 
     public User(Long id) {
         this.id = id;
     }
+
+    User() {}
 
     @Override
     public boolean equals(Object o) {
@@ -28,5 +30,9 @@ public class User {
     @Override
     public int hashCode() {
         return id.hashCode();
+    }
+
+    public Long getId() {
+        return id;
     }
 }
