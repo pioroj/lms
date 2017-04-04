@@ -6,6 +6,7 @@ import java.time.LocalDateTime;
 public class OrderDto {
 
     private Long userId;
+    private String book;
     private LocalDateTime orderedAt;
     private LocalDateTime returnedAt;
 
@@ -15,6 +16,14 @@ public class OrderDto {
 
     public void setUserId(Long userId) {
         this.userId = userId;
+    }
+
+    public String getBook() {
+        return book;
+    }
+
+    public void setBook(String book) {
+        this.book = book;
     }
 
     public LocalDateTime getOrderedAt() {

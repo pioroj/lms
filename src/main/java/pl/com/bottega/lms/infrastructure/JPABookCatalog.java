@@ -4,13 +4,10 @@ package pl.com.bottega.lms.infrastructure;
 import pl.com.bottega.lms.application.*;
 import pl.com.bottega.lms.model.Book;
 import pl.com.bottega.lms.model.BookNumber;
-import pl.com.bottega.lms.model.Order;
+import pl.com.bottega.lms.model.Loan;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
-import java.util.LinkedList;
-import java.util.List;
 
 public class JPABookCatalog implements BookCatalog {
 
@@ -24,9 +21,7 @@ public class JPABookCatalog implements BookCatalog {
 
     @Override
     public BookDto get(BookNumber bookNumber) {
-        Query query = entityManager.createQuery("SELECT b FROM Book b LEFT JOIN FETCH b.orders WHERE b.number = :nr");
-        query.setParameter("nr", bookNumber);
-        Book book = (Book) query.getResultList().get(0);
+        Book book = entityManager.find(Book.class, bookNumber);
 
         BookDto bookDto = new BookDto();
         bookDto.setNumber(bookNumber.getNumber());
@@ -36,11 +31,11 @@ public class JPABookCatalog implements BookCatalog {
         return bookDto;
     }
 
-    private OrderDto createOrderDto(Order order) {
+    private OrderDto createOrderDto(Loan loan) {
         OrderDto orderDto = new OrderDto();
-        orderDto.setUserId(order.getBorrower().getId());
-        orderDto.setOrderedAt(order.getOrderDate());
-        orderDto.setReturnedAt(order.getReturnDate());
+        orderDto.setUserId(loan.getBorrower().getId());
+        orderDto.setOrderedAt(loan.getOrderDate());
+        orderDto.setReturnedAt(loan.getReturnDate());
         return orderDto;
     }
 

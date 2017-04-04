@@ -3,12 +3,7 @@ package pl.com.bottega.lms;
 
 import org.junit.Test;
 import pl.com.bottega.lms.model.Book;
-import pl.com.bottega.lms.model.NumberGenerator;
 import pl.com.bottega.lms.model.commands.AddBookCommand;
-import pl.com.bottega.lms.model.commands.OrderBookCommand;
-import pl.com.bottega.lms.model.commands.ReturnBookCommand;
-
-import java.time.LocalDate;
 
 import static org.junit.Assert.assertEquals;
 
@@ -26,8 +21,7 @@ public class BookTest {
     public void shouldBeUnavailableAfterOrdering() {
         Book book = given().newBook();
 
-        OrderBookCommand cmd = new OrderBookCommand();
-        book.orderBook(cmd);
+        book.orderBook();
 
         System.out.println(book.getNumber());
 
@@ -38,11 +32,9 @@ public class BookTest {
     public void shouldBeAvailableAfterReturning() {
         Book book = given().newBook();
 
-        OrderBookCommand orderCmd = new OrderBookCommand();
-        book.orderBook(orderCmd);
+        book.orderBook();
 
-        ReturnBookCommand returnCmd = new ReturnBookCommand();
-        book.returnBook(returnCmd);
+        book.returnBook();
 
         assertEquals(true, book.isAvailable());
     }
@@ -55,12 +47,10 @@ public class BookTest {
 
         Book newBook() {
             AddBookCommand cmd = new AddBookCommand();
-            NumberGenerator generator = new NumberGenerator();
             cmd.setTitle("Java - podstawy");
             cmd.setAuthor("John Doe");
-            cmd.setNumber(generator.generate().toString());
             cmd.setYear(1997);
-            return new Book(cmd, generator);
+            return new Book(cmd);
         }
 
     }

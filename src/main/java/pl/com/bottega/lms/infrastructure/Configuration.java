@@ -4,10 +4,11 @@ import org.springframework.context.annotation.Bean;
 import pl.com.bottega.lms.application.AdminModule;
 import pl.com.bottega.lms.application.BookCatalog;
 import pl.com.bottega.lms.application.OrderingProcess;
+import pl.com.bottega.lms.application.UserManagement;
 import pl.com.bottega.lms.application.implementation.StandardAdminModule;
 import pl.com.bottega.lms.application.implementation.StandardOrderingProcess;
+import pl.com.bottega.lms.application.implementation.StandardUserManagement;
 import pl.com.bottega.lms.model.BookRepository;
-import pl.com.bottega.lms.model.NumberGenerator;
 import pl.com.bottega.lms.model.OrderRepository;
 import pl.com.bottega.lms.model.UserRepository;
 
@@ -25,13 +26,8 @@ public class Configuration {
     }
 
     @Bean
-    public NumberGenerator numberGenerator() {
-        return new NumberGenerator();
-    }
-
-    @Bean
-    public AdminModule adminModule(NumberGenerator numberGenerator, BookRepository bookRepository) {
-        return new StandardAdminModule(numberGenerator, bookRepository);
+    public AdminModule adminModule(BookRepository bookRepository) {
+        return new StandardAdminModule(bookRepository);
     }
 
     @Bean
@@ -49,6 +45,11 @@ public class Configuration {
     @Bean
     public UserRepository userRepository() {
         return new JPAUserRepository();
+    }
+
+    @Bean
+    public UserManagement userManagement(UserRepository userRepository) {
+        return new StandardUserManagement(userRepository);
     }
 
 }

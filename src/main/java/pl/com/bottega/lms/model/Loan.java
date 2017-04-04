@@ -5,7 +5,7 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-public class Order {
+public class Loan {
 
     @Id
     @GeneratedValue
@@ -22,11 +22,12 @@ public class Order {
     private LocalDateTime orderDate;
     private LocalDateTime returnDate;
 
-    Order() {}
+    Loan() {}
 
-    public Order(User borrower, Book book) {
+    public Loan(User borrower, Book book) {
         this.borrower = borrower;
         this.book = book;
+        this.orderDate = LocalDateTime.now();
     }
 
     public boolean isOrdered() {
@@ -37,19 +38,16 @@ public class Order {
         return borrower.equals(user);
     }
 
-    public void orderBook() {
-        if (isOrdered()) {
-            throw new BookOrderException("Book is not available at the moment");
-        }
-        this.orderDate = LocalDateTime.now();
-    }
-
-    public void returnBook() {
-        this.returnDate = LocalDateTime.now();
+    public Long getId() {
+        return id;
     }
 
     public User getBorrower() {
         return borrower;
+    }
+
+    public Book getBook() {
+        return book;
     }
 
     public LocalDateTime getOrderDate() {
@@ -60,7 +58,23 @@ public class Order {
         return returnDate;
     }
 
-    public Book getBook() {
-        return book;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Loan)) return false;
+
+        Loan loan = (Loan) o;
+
+        if (!id.equals(loan.id)) return false;
+        if (!borrower.equals(loan.borrower)) return false;
+        return book.equals(loan.book);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id.hashCode();
+        result = 31 * result + borrower.hashCode();
+        result = 31 * result + book.hashCode();
+        return result;
     }
 }

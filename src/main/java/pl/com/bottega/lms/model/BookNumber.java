@@ -1,16 +1,17 @@
 package pl.com.bottega.lms.model;
 
 
+import javax.persistence.Embeddable;
 import java.io.Serializable;
+import java.util.UUID;
 
+@Embeddable
 public class BookNumber implements Serializable {
 
     private String number;
 
-    BookNumber() {}
-
-    public BookNumber(String number) {
-        this.number = number;
+    public BookNumber() {
+        this.number = "nr-" + UUID.randomUUID().toString();
     }
 
     public String getNumber() {

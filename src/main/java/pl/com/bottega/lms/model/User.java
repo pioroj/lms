@@ -1,6 +1,7 @@
 package pl.com.bottega.lms.model;
 
-import javax.persistence.Embeddable;
+import pl.com.bottega.lms.model.commands.CreateUserCommand;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -16,8 +17,11 @@ public class User {
     private String phoneNumber;
     private String email;
 
-    public User(Long id) {
-        this.id = id;
+    public User(CreateUserCommand cmd) {
+        this.name = cmd.getName();
+        this.surname = cmd.getSurname();
+        this.email = cmd.getEmail();
+        this.phoneNumber = cmd.getPhoneNumber();
     }
 
     User() {}

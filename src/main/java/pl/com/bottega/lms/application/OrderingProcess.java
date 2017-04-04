@@ -1,13 +1,13 @@
 package pl.com.bottega.lms.application;
 
 
-import pl.com.bottega.lms.model.commands.OrderBookCommand;
-import pl.com.bottega.lms.model.commands.ReturnBookCommand;
+import pl.com.bottega.lms.model.Book;
+import pl.com.bottega.lms.model.User;
 
 public interface OrderingProcess {
 
-    void orderBook(OrderBookCommand cmd);
+    void orderBook(Book book, User user);
 
-    void returnBook(ReturnBookCommand cmd);
+    void returnBook(Book book, User user);
 
 }

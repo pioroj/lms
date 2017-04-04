@@ -1,7 +1,7 @@
 package pl.com.bottega.lms.infrastructure;
 
 
-import pl.com.bottega.lms.model.Order;
+import pl.com.bottega.lms.model.Loan;
 import pl.com.bottega.lms.model.OrderRepository;
 
 import javax.persistence.EntityManager;
@@ -14,7 +14,7 @@ public class JPAOrderRepository implements OrderRepository {
     private EntityManager entityManager;
 
     @Override
-    public void put(Order order) {
-        entityManager.persist(order);
+    public void put(Loan loan) {
+        entityManager.persist(loan);
     }
 }

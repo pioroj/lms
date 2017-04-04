@@ -6,18 +6,9 @@ import java.util.Collection;
 
 public class AddBookCommand {
 
-    private String number;
     private String title;
     private String author;
     private int year;
-
-    public String getNumber() {
-        return number;
-    }
-
-    public void setNumber(String number) {
-        this.number = number;
-    }
 
     public String getTitle() {
         return title;
