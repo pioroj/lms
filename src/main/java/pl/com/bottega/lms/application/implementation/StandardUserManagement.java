@@ -18,9 +18,10 @@ public class StandardUserManagement implements UserManagement {
     }
 
     @Override
-    public void createUser(CreateUserCommand cmd) {
+    public Long createUser(CreateUserCommand cmd) {
         User user = new User(cmd);
         userRepository.put(user);
+        return user.getId();
     }
 
     @Override

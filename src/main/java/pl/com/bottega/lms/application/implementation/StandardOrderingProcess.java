@@ -19,7 +19,9 @@ public class StandardOrderingProcess implements OrderingProcess {
 
     @Override
     @Transactional
-    public void orderBook(Book book, User user) {
+    public void orderBook(BookNumber bookNumber, Long userId) {
+        User user = userRepository.get(userId);
+        Book book = bookRepository.get(bookNumber);
         Loan loan = new Loan(user, book);
         book.orderBook();
         orderRepository.put(loan);
@@ -27,7 +29,11 @@ public class StandardOrderingProcess implements OrderingProcess {
 
     @Override
     @Transactional
-    public void returnBook(Book book, User user) {
-
+    public void returnBook(BookNumber bookNumber, Long userId) {
+        User user = userRepository.get(userId);
+        Book book = bookRepository.get(bookNumber);
+        Loan loan = orderRepository.findOrderBy(user, book);
+        book.returnBook();
+        orderRepository.put(loan);
     }
 }

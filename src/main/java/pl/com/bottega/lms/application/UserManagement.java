@@ -7,7 +7,7 @@ import pl.com.bottega.lms.model.User;
 
 public interface UserManagement {
 
-    void createUser(CreateUserCommand cmd);
+    Long createUser(CreateUserCommand cmd);
 
     void updateUser(UpdateUserCommand cmd);
 

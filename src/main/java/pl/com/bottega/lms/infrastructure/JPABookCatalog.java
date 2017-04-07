@@ -31,12 +31,4 @@ public class JPABookCatalog implements BookCatalog {
         return bookDto;
     }
 
-    private OrderDto createOrderDto(Loan loan) {
-        OrderDto orderDto = new OrderDto();
-        orderDto.setUserId(loan.getBorrower().getId());
-        orderDto.setOrderedAt(loan.getOrderDate());
-        orderDto.setReturnedAt(loan.getReturnDate());
-        return orderDto;
-    }
-
 }

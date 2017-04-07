@@ -27,10 +27,14 @@ public class Book {
     }
 
     public void orderBook() {
+        if (!isAvailable())
+            throw new BookOrderException(String.format("Book %s is not available.", this.title));
         this.available = false;
     }
 
     public void returnBook() {
+        if (isAvailable())
+            throw new BookOrderException(String.format("Cannot return book %s.", this.title));
         this.available = true;
     }
 
