@@ -2,38 +2,41 @@ package pl.com.bottega.lms.application.implementation;
 
 
 import org.springframework.transaction.annotation.Transactional;
-import pl.com.bottega.lms.application.OrderingProcess;
+import pl.com.bottega.lms.application.UserModule;
 import pl.com.bottega.lms.model.*;
+import pl.com.bottega.lms.model.commands.CreateUserCommand;
+import pl.com.bottega.lms.model.commands.UpdateUserCommand;
 
-public class StandardOrderingProcess implements OrderingProcess {
+@Transactional
+public class StandardUserModule implements UserModule {
 
+    private UserRepository userRepository;
     private BookRepository bookRepository;
     private OrderRepository orderRepository;
-    private UserRepository userRepository;
 
-    public StandardOrderingProcess(BookRepository bookRepository, OrderRepository orderRepository, UserRepository userRepository) {
+    public StandardUserModule(UserRepository userRepository,
+							  BookRepository bookRepository,
+							  OrderRepository orderRepository) {
+        this.userRepository = userRepository;
         this.bookRepository = bookRepository;
         this.orderRepository = orderRepository;
-        this.userRepository = userRepository;
     }
 
     @Override
-    @Transactional
     public void orderBook(BookNumber bookNumber, Long userId) {
         User user = userRepository.get(userId);
         Book book = bookRepository.get(bookNumber);
-        Loan loan = new Loan(user, book);
+        Loan loan = new Loan(user, bookNumber);
         book.orderBook();
         orderRepository.put(loan);
     }
 
     @Override
-    @Transactional
     public void returnBook(BookNumber bookNumber, Long userId) {
         User user = userRepository.get(userId);
         Book book = bookRepository.get(bookNumber);
-        Loan loan = orderRepository.findOrderBy(user, book);
+        Loan loan = orderRepository.findOrderBy(user, bookNumber);
         book.returnBook();
-        orderRepository.put(loan);
+		loan.endLoaning();
     }
 }

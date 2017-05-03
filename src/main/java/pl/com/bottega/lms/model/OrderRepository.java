@@ -7,6 +7,6 @@ public interface OrderRepository {
 
     Loan get(Long orderId);
 
-    Loan findOrderBy(User borrower, Book book);
+    Loan findOrderBy(User borrower, BookNumber bookNumber);
 
 }

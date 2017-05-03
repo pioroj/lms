@@ -1,13 +1,18 @@
 package pl.com.bottega.lms.acceptance;
 
+import org.assertj.core.api.Assertions;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.transaction.annotation.Transactional;
-import pl.com.bottega.lms.application.*;
-import pl.com.bottega.lms.model.*;
+import pl.com.bottega.lms.application.AdminModule;
+import pl.com.bottega.lms.application.OrderingProcess;
+import pl.com.bottega.lms.application.UserModule;
+import pl.com.bottega.lms.model.Book;
+import pl.com.bottega.lms.model.BookNumber;
+import pl.com.bottega.lms.model.BookRepository;
+import pl.com.bottega.lms.model.UserRepository;
 import pl.com.bottega.lms.model.commands.AddBookCommand;
 import pl.com.bottega.lms.model.commands.CreateUserCommand;
 
@@ -15,35 +20,25 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest
-@Transactional
-public class BookOrderingTest {
+public class UserModuleTest {
+
+	@Autowired
+	private UserModule userModule;
+
+	@Autowired
+	private AdminModule adminModule;
 
     @Autowired
-    private AdminModule adminModule;
-
-    @Autowired
-    private OrderingProcess orderingProcess;
-
-    @Autowired
-    private BookCatalog bookCatalog;
-
-    @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
-    private BookRepository bookRepository;
-
-    @Autowired
-    private UserManagement userManagement;
+	private BookRepository bookRepository;
 
     @Test
     public void shouldOrderBook() {
         BookNumber bookNumber = createBook();
         CreateUserCommand createUserCommand = createUser();
-        Long userId = userManagement.createUser(createUserCommand);
-        Book book = bookRepository.get(bookNumber);
+        Long userId = adminModule.createUser(createUserCommand);
 
-        orderingProcess.orderBook(bookNumber, userId);
+		userModule.orderBook(bookNumber, userId);
+		Book book = bookRepository.get(bookNumber);
 
         assertThat(book.isAvailable()).isFalse();
     }
@@ -52,13 +47,13 @@ public class BookOrderingTest {
     public void shouldReturnBook() {
         BookNumber bookNumber = createBook();
         CreateUserCommand createUserCommand = createUser();
-        Long userId = userManagement.createUser(createUserCommand);
-        Book book = bookRepository.get(bookNumber);
+        Long userId = adminModule.createUser(createUserCommand);
 
-        orderingProcess.orderBook(bookNumber, userId);
-        orderingProcess.returnBook(bookNumber, userId);
+		userModule.orderBook(bookNumber, userId);
+		userModule.returnBook(bookNumber, userId);
+		Book book = bookRepository.get(bookNumber);
 
-        assertThat(book.isAvailable()).isTrue();
+		assertThat(book.isAvailable()).isTrue();
     }
 
     private CreateUserCommand createUser() {
@@ -72,7 +67,7 @@ public class BookOrderingTest {
 
     private BookNumber createBook() {
         AddBookCommand addBookCommand = new AddBookCommand();
-        addBookCommand.setTitle("Java");
+        addBookCommand.setTitle("Java 3");
         addBookCommand.setAuthor("John Doe");
         addBookCommand.setYear(1997);
         return adminModule.add(addBookCommand);
