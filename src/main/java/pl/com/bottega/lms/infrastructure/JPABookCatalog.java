@@ -8,7 +8,9 @@ import pl.com.bottega.lms.model.Loan;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.transaction.Transactional;
 
+@Transactional
 public class JPABookCatalog implements BookCatalog {
 
     @PersistenceContext

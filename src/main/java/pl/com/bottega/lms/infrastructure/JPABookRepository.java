@@ -7,7 +7,9 @@ import pl.com.bottega.lms.model.BookRepository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.transaction.Transactional;
 
+@Transactional
 public class JPABookRepository implements BookRepository {
 
     @PersistenceContext

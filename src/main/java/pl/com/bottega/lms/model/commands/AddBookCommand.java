@@ -1,10 +1,11 @@
 package pl.com.bottega.lms.model.commands;
 
 
-import java.time.LocalDate;
-import java.util.Collection;
+import java.time.LocalDateTime;
 
-public class AddBookCommand {
+public class AddBookCommand implements Validatable {
+
+	private static final String REQUIRED_FIELD = "is a required field and can not be blank";
 
     private String title;
     private String author;
@@ -33,4 +34,34 @@ public class AddBookCommand {
     public void setAuthor(String author) {
         this.author = author;
     }
+
+    @Override
+    public void validate(ValidationErrors errors) {
+        validateTitle(errors);
+		validateAuthor(errors);
+		validateYear(errors);
+	}
+
+	private void validateYear(ValidationErrors errors) {
+		if (year > LocalDateTime.now().getYear())
+			errors.add("year", "can not be in future");
+	}
+
+	private void validateAuthor(ValidationErrors errors) {
+		if (author == null) {
+			errors.add("author", REQUIRED_FIELD);
+			return;
+		}
+		if (author.trim().isEmpty())
+			errors.add("author", REQUIRED_FIELD);
+	}
+
+	private void validateTitle(ValidationErrors errors) {
+		if (title == null) {
+			errors.add("title", REQUIRED_FIELD);
+			return;
+		}
+		if (title.trim().isEmpty())
+			errors.add("title", REQUIRED_FIELD);
+	}
 }

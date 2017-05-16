@@ -2,6 +2,6 @@
 
 #### Library Management System
 
-LMS is my first project connecting Java, Spring and JPA.
+LMS is my first project connecting Java, Spring and JPA. 
 
-LMS has two modules - for admin and user. Admin manages users and books. User can order and return book.
+LMS has two modules - for admin and user. Admin manages users and books. User can order and return book. I am going to add some features.
