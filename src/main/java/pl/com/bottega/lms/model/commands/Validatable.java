@@ -7,6 +7,8 @@ import java.util.Set;
 
 public interface Validatable {
 
+	String REQUIRED_FIELD = "is a required field and can not be empty";
+
 	void validate(ValidationErrors errors);
 
 	class ValidationErrors {

@@ -5,8 +5,6 @@ import java.time.LocalDateTime;
 
 public class AddBookCommand implements Validatable {
 
-	private static final String REQUIRED_FIELD = "is a required field and can not be blank";
-
     private String title;
     private String author;
     private int year;
